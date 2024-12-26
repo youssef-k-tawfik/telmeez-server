@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Create .env file
-        run: echo ${{secrets.ENV_VARS}} > .env
+        run: echo "${{secrets.ENV_VARS}}" > .env
         
       - name: Set env vars
         run: export $(cat .env | xargs)
