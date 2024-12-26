@@ -1,0 +1,31 @@
+name: Build and test docker image
+
+on:
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build_and_test_docker_image:
+    runs-on: ubuntu-20.04
+
+    defaults:
+      run:
+        working-directory: ./app
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: echo "${{secrets.ENV_VARS}}" > .env
+        
+      - name: Set env vars
+        run: export $(cat .env | xargs)
+
+      - name: Build docker image
+        run: docker build . -t ${{secrets.DOCKER_IMAGE_NAME}}
+
+      - name: Run tests in container
+        run: docker run ${{secrets.DOCKER_IMAGE_NAME}} npm run test
