@@ -1,4 +1,4 @@
-name: Node.js CD
+name: Build and deploy docker image
 
 on:
   pull_request:
@@ -6,8 +6,10 @@ on:
       - closed
     branches: ["main"]
 
+  workflow_dispatch:
+
 jobs:
-  deploy_image:
+  build_and_deploy_docker_image:
     if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-20.04
@@ -17,18 +19,25 @@ jobs:
         working-directory: ./app
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: echo ${{secrets.ENV_VARS}} > .env
+        
+      - name: Set env vars
+        run: export $(cat .env | xargs)
 
       - name: Build docker image
-        run: docker build . -t app-image
+        run: docker build . -t ${{secrets.DOCKER_IMAGE_NAME}}
 
       - name: Run tests in container
-        run: docker run app-image npm run test
+        run: docker run ${{secrets.DOCKER_IMAGE_NAME}} npm run test
 
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Tag and push image
         run: |
-          docker tag app-image ${{secrets.DOCKER_USERNAME}}/app-image:latest
-          docker push ${{secrets.DOCKER_USERNAME}}/app-image:latest
+          docker tag ${{secrets.DOCKER_IMAGE_NAME}} ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_IMAGE_NAME}}:latest
+          docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_IMAGE_NAME}}:latest

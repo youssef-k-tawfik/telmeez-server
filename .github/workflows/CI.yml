@@ -1,8 +1,10 @@
-name: Node.js CI
+name: Build and test Node.js
 
 on:
   pull_request:
     branches: ["main", "dev"]
+
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,7 +15,8 @@ jobs:
         working-directory: ./app
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
@@ -21,6 +24,18 @@ jobs:
           node-version: "22.x"
           cache: "npm"
           cache-dependency-path: app/package-lock.json
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .env file
+        run: echo ${{secrets.ENV_VARS}} > .env
+        
+      - name: Set env vars
+        run: export $(cat .env | xargs)
+        
+      - name: Build files (if applicable)
+        run: npm run build --if-present
+        
+      - name: Run tests
+        run: npm test
