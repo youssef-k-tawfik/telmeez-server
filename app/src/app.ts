@@ -3,7 +3,7 @@ console.log("starting app");
 import "reflect-metadata";
 import express from "express";
 import morgan from "morgan";
-import { postgresConnection } from "./database/data-source";
+import { postgresConnection } from "./config/postgres";
 
 const app = express();
 
