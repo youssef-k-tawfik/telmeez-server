@@ -1,12 +1,18 @@
 console.log("starting app");
 
+import "reflect-metadata";
 import express from "express";
 import morgan from "morgan";
+import { postgresConnection } from "./database/data-source";
 
 const app = express();
 
 app.use(express.json());
 app.use(morgan("dev"));
+
+// Database connection
+postgresConnection();
+// mongoConnection();
 
 // Routes
 app.get("/", (_: express.Request, res: express.Response) => {
