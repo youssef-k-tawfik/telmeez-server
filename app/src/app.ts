@@ -1,9 +1,10 @@
-console.log("starting app");
-
-import "reflect-metadata";
 import express from "express";
 import morgan from "morgan";
+import "reflect-metadata";
 import { postgresConnection } from "./config/postgres";
+import { LogLevels, Logger } from "./utils/logger.js";
+
+Logger.log(LogLevels.INFO, "starting app");
 
 const app = express();
 
