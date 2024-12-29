@@ -1,15 +1,16 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
+import { Student } from "./student.js";
+import { Course } from "./course.js";
 
 @Entity("enrollment")
+@Index(["student.id", "course.id"], {unique: true})
+@Index(["course.id", "student.id"], {unique: true})
 export class Enrollment extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
-    enrollmentID!: string;
+    id!: string;
 
-    @PrimaryColumn('uuid')
-    studentID!: string;
-
-    @PrimaryColumn('uuid')
-    courseID!: string;
+    @Column('int')
+    progress!: number;
 
     @CreateDateColumn()
     startDate!: Date;
@@ -17,9 +18,12 @@ export class Enrollment extends BaseEntity{
     @Column('date')
     completionDate!: Date;
 
-    @Column()
-    progress!: number;
-
     @UpdateDateColumn()
     updatedAt!: Date;
+
+    @ManyToOne(() => Student, (Student) => Student.enrollments)
+    student!: Relation<Student>
+
+    @ManyToOne(() => Course, (Course) => Course.enrollments)
+    course!: Relation<Course>
 }

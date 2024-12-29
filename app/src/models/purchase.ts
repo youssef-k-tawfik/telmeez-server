@@ -1,19 +1,27 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { PaymentMethods } from "./payment.js";
+import { Student } from "./student.js";
+import { Course } from "./course.js";
 
-@Entity("enrollment")
+@Entity("purchase")
+@Index(["student.id", "course.id"], {unique: true})
+@Index(["course.id", "student.id"], {unique: true})
 export class Purchase extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
-    purchaseID!: string;
+    id!: string;
 
-    @PrimaryColumn('uuid')
-    studentID!: string;
-
-    @Column()
-    paymentMethod!: string;
+    @Column({type: "enum", enum: PaymentMethods, enumName: "PaymentMethods"})
+    paymentMethod!: PaymentMethods;
 
     @Column('float')
     amount!: number;
 
     @CreateDateColumn()
-    startDate!: Date;
+    purchaseDate!: Date;
+
+    @ManyToOne(() => Student, (Student) => Student.purchases)
+    student!: Relation<Student>
+
+    @ManyToOne(() => Course, (Course) => Course.purchases)
+    course!: Relation<Course>
 }

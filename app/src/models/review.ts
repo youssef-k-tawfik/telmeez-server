@@ -1,15 +1,12 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
+import { Student } from "./student.js";
+import { Course } from "./course.js";
 
 @Entity("review")
+@Index(["course.id", "student.id"], {unique: true})
 export class Review extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
-    reviewID!: string;
-
-    @PrimaryColumn('uuid')
-    studentID!: string;
-
-    @PrimaryColumn('uuid')
-    courseID!: string;
+    id!: string;
 
     @Column('text')
     content!: string;
@@ -22,4 +19,10 @@ export class Review extends BaseEntity{
 
     @UpdateDateColumn()
     updatedAt!: Date;
+
+    @ManyToOne(() => Student, (Student) => Student.reviews)
+    student!: Relation<Student>
+
+    @ManyToOne(() => Course, (Course) => Course.reviews)
+    course!: Relation<Course>
 }
