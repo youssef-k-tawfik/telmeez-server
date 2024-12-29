@@ -9,6 +9,28 @@ import { Purchase } from "./purchase.js";
 import { Enrollment } from "./enrollment.js";
 import { Certificate } from "./certificate.js";
 
-export const entities = [User, Course, Payment, Field, Teacher, Student, Review, Purchase, Enrollment, Certificate];
+export const entities = [
+  User,
+  Course,
+  Payment,
+  Field,
+  Teacher,
+  Student,
+  Review,
+  Purchase,
+  Enrollment,
+  Certificate,
+];
 
-export { User, Course, Payment, Field, Teacher, Student, Review, Purchase, Enrollment, Certificate };
+export {
+  User,
+  Course,
+  Payment,
+  Field,
+  Teacher,
+  Student,
+  Review,
+  Purchase,
+  Enrollment,
+  Certificate,
+};

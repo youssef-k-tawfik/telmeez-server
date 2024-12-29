@@ -9,7 +9,6 @@ import {
   Relation,
 } from "typeorm";
 import { Teacher } from "./teacher.js";
-import { Course } from "./course.js";
 
 export enum PaymentMethods {
   Bank = "bank",

@@ -1,9 +1,9 @@
-import { Entity, Column, OneToMany, Relation, ManyToOne } from "typeorm";
+import { Entity, Column, OneToMany, Relation } from "typeorm";
 import { User } from "./user.js";
 import { Payment, PaymentMethods } from "./payment.js";
 import { Course } from "./course.js";
 
-@Entity('teacher')
+@Entity("teacher")
 export class Teacher extends User {
   @Column("text")
   bio!: string;
@@ -14,7 +14,7 @@ export class Teacher extends User {
   @Column("float")
   wallet!: number;
 
-  @Column({type: "enum", enum: PaymentMethods, enumName: "PaymentMethods"})
+  @Column({ type: "enum", enum: PaymentMethods, enumName: "PaymentMethods" })
   paymentMethod!: PaymentMethods;
 
   @OneToMany(() => Payment, (Payment) => Payment.teacher)

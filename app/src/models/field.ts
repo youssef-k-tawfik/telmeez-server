@@ -1,12 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, Relation } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToMany,
+  Relation,
+} from "typeorm";
 import { Course } from "./course.js";
 
-@Entity('field')
+@Entity("field")
 export class Field extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column('varchar', { unique: true })
+  @Column("varchar", { unique: true })
   name!: string;
 
   @OneToMany(() => Course, (Course) => Course.field)

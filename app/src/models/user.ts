@@ -18,21 +18,21 @@ export enum Gender {
   Female = "female",
 }
 
-@Entity('user')
+@Entity("user")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column('varchar')
+  @Column("varchar")
   name!: string; // Storing full name
 
-  @Column('varchar', { unique: true })
+  @Column("varchar", { unique: true })
   username!: string; // username for login and profile URL
 
-  @Column('varchar', { unique: true })
+  @Column("varchar", { unique: true })
   email!: string;
 
-  @Column('text')
+  @Column("text")
   password!: string; // hashed password
 
   @Column({
@@ -52,8 +52,8 @@ export class User extends BaseEntity {
   pictureURL!: string; // profile picture URL
 
   @CreateDateColumn()
-  created_at!: Date; // Date of account creation
+  createdAt!: Date; // Date of account creation
 
   @UpdateDateColumn()
-  updated_at!: Date; // Date of last update
+  updatedAt!: Date; // Date of last update
 }
