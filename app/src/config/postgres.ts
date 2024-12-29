@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { entities } from "../models";
+import { LogLevels, Logger } from "../utils/logger.js";
+import { entities } from "../models/index.js";
 
 export const PostgresDataSource = new DataSource({
   type: "postgres",
@@ -14,12 +15,12 @@ export const PostgresDataSource = new DataSource({
 
 export const postgresConnection = () => {
   PostgresDataSource.initialize()
-    .then(() => console.log("Database connected"))
-    .catch((err) => console.error(err));
+    .then(() => Logger.log(LogLevels.INFO, "Database connected"))
+    .catch((err) => Logger.log(LogLevels.ERROR, "Failed to connect to Postgres\n" + err));
 };
 
 export const postgresDisconnect = () => {
   PostgresDataSource.destroy()
-    .then(() => console.log("Database disconnected"))
-    .catch((err) => console.error(err));
+    .then(() => Logger.log(LogLevels.INFO, "Database disconnected"))
+    .catch((err) => Logger.log(LogLevels.ERROR, "Failed to disconnect to Postgres\n" + err));
 };
