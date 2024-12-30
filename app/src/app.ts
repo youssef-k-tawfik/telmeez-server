@@ -2,8 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import { postgresConnection } from "./config/postgres.js";
 import { LogLevels, Logger } from "./utils/logger.js";
-import errorHandler from "./middlewares/errorHandler.js";
-import { customError } from "./utils/customError.js";
+import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 
 Logger.log(LogLevels.INFO, "starting app");
 
@@ -28,6 +27,6 @@ app.use((_, res) => {
 });
 
 // Error handling middleware (Must be last middleware)
-app.use(errorHandler);
+app.use(errorHandlerMiddleware);
 
 export default app;

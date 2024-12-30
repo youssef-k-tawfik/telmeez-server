@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { customError } from "../utils/customError.js";
 import { LogLevels, Logger } from "../utils/logger.js";
 
-const errorHandler = (error: any, _: Request, res: Response, next: NextFunction) => {
+const errorHandlerMiddleware = (error: any, _: Request, res: Response, next: NextFunction) => {
     let status = 500;
     let message = "Internal server error";
   
@@ -16,4 +16,4 @@ const errorHandler = (error: any, _: Request, res: Response, next: NextFunction)
     res.status(status).json({error: message});
 };
 
-export default errorHandler;
+export default errorHandlerMiddleware;
