@@ -58,8 +58,8 @@ export class Logger {
     }
 
     const timestamp = new Date().toLocaleString();
-    const formattedMsg = `${timestamp} - [${level}]: ${message}`;
+    const label = `${timestamp} - [${level}]:`;
 
-    console.log(`\x1b[3${color}m%s\x1b[0m`, formattedMsg);
+    console.log(`\x1b[3${color}m%s\x1b[0m %s`, label, message);
   }
 }
