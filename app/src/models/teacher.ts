@@ -18,24 +18,8 @@ export class Teacher extends User {
   paymentMethod!: PaymentMethods;
 
   @OneToMany(() => Payment, (Payment) => Payment.teacher)
-  payments!: Relation<Payment[]>;
+  payments?: Relation<Payment[]>;
 
   @OneToMany(() => Course, (Course) => Course.teacher)
-  courses!: Relation<Course[]>;
+  courses?: Relation<Course[]>;
 }
-
-export const fetchTeacherById = (id: Teacher["id"]) => {
-  // call database to fetch Teacher by id
-};
-
-export const createTeacher = (data: Teacher) => {
-  // call database to create Teacher
-};
-
-export const updateTeacher = (data: Teacher) => {
-  // call database to update Teacher
-};
-
-export const deleteTeacher = (data: Teacher) => {
-  // call database to delete Teacher
-};

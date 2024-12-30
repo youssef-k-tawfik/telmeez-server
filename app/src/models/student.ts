@@ -14,30 +14,14 @@ export class Student extends User {
   completedCourses!: number;
 
   @OneToMany(() => Enrollment, (Enrollment) => Enrollment.student)
-  enrollments!: Relation<Enrollment[]>;
+  enrollments?: Relation<Enrollment[]>;
 
   @OneToMany(() => Purchase, (Purchase) => Purchase.student)
-  purchases!: Relation<Purchase[]>;
+  purchases?: Relation<Purchase[]>;
 
   @OneToMany(() => Review, (Review) => Review.student)
-  reviews!: Relation<Review[]>;
+  reviews?: Relation<Review[]>;
 
   @OneToMany(() => Certificate, (Certificate) => Certificate.student)
-  certificates!: Relation<Certificate[]>;
+  certificates?: Relation<Certificate[]>;
 }
-
-export const fetchStudentById = (id: Student["id"]) => {
-  // call database to fetch Student by id
-};
-
-export const createStudent = (data: Student) => {
-  // call database to create Student
-};
-
-export const updateStudent = (data: Student) => {
-  // call database to update Student
-};
-
-export const deleteStudent = (data: Student) => {
-  // call database to delete Student
-};
