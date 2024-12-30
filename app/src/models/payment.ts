@@ -5,32 +5,31 @@ import {
   BaseEntity,
   CreateDateColumn,
   Index,
+  ManyToOne,
+  Relation,
 } from "typeorm";
+import { Teacher } from "./teacher.js";
 
-export enum paymentMethods {
+export enum PaymentMethods {
   Bank = "bank",
   PayPal = "paypal",
 }
 
-@Entity()
+@Entity('payment')
+@Index(["teacher.id"])
 export class Payment extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column("uuid")
-  @Index()
-  teacherId!: string;
-
-  @Column("uuid")
-  @Index()
-  courseId!: string;
-
-  @Column()
-  paymentMethod!: paymentMethods;
+  @Column({ type: "enum", enum: PaymentMethods, enumName: "PaymentMehtods" })
+  paymentMethod!: PaymentMethods;
 
   @Column("float")
   amount!: number;
 
   @CreateDateColumn()
   timestamp!: Date;
+
+  @ManyToOne(() => Teacher, (Teacher) => Teacher.payments)
+  teacher!: Relation<Teacher>
 }

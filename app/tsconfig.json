@@ -22,12 +22,7 @@
     /* tsconfig for typeorm */
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6"]
   },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
-  },
-  "include": ["**/*"],
+  "include": ["src/**/*", "server.ts"],
   "exclude": ["node_modules"]
 }
