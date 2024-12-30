@@ -1,5 +1,4 @@
 import {
-  Entity,
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
@@ -18,7 +17,6 @@ export enum Gender {
   Female = "female",
 }
 
-@Entity("user")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -32,7 +30,7 @@ export class User extends BaseEntity {
   @Column("varchar", { unique: true })
   email!: string;
 
-  @Column("text")
+  @Column("text", { select: false })
   password!: string; // hashed password
 
   @Column({
@@ -45,7 +43,11 @@ export class User extends BaseEntity {
   @Column({ type: "int", unsigned: true })
   age!: number;
 
-  @Column({ type: "enum", enum: Gender, enumName: "Gender" })
+  @Column({
+    type: "enum",
+    enum: Gender,
+    enumName: "Gender",
+  })
   gender!: Gender;
 
   @Column("text")
