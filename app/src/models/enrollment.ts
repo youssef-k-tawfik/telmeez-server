@@ -14,7 +14,6 @@ import { Course } from "./course.js";
 
 @Entity("enrollment")
 @Index(["student.id", "course.id"], { unique: true })
-@Index(["course.id", "student.id"], { unique: true })
 export class Enrollment extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -31,9 +30,10 @@ export class Enrollment extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @ManyToOne(() => Student, (Student) => Student.enrollments)
+  @ManyToOne(() => Student, (Student) => Student.enrollments, { eager: true })
   student!: Relation<Student>;
 
-  @ManyToOne(() => Course, (Course) => Course.enrollments)
+  @ManyToOne(() => Course, (Course) => Course.enrollments, { eager: true })
   course!: Relation<Course>;
 }
+

@@ -30,9 +30,10 @@ export class Review extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @ManyToOne(() => Student, (Student) => Student.reviews)
+  @ManyToOne(() => Student, (Student) => Student.reviews, { eager: true })
   student!: Relation<Student>;
 
-  @ManyToOne(() => Course, (Course) => Course.reviews)
+  @ManyToOne(() => Course, (Course) => Course.reviews, { eager: true })
   course!: Relation<Course>;
 }
+
