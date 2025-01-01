@@ -19,9 +19,10 @@ export class Certificate extends BaseEntity {
   @CreateDateColumn()
   issueDate!: Date;
 
-  @ManyToOne(() => Student, (Student) => Student.certificates)
+  @ManyToOne(() => Student, (Student) => Student.certificates, { eager: true })
   student!: Relation<Student>;
 
-  @ManyToOne(() => Course, (Course) => Course.certificates)
+  @ManyToOne(() => Course, (Course) => Course.certificates, { eager: true })
   course!: Relation<Course>;
 }
+

@@ -15,13 +15,13 @@ export enum PaymentMethods {
   PayPal = "paypal",
 }
 
-@Entity('payment')
+@Entity("payment")
 @Index(["teacher.id"])
 export class Payment extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ type: "enum", enum: PaymentMethods, enumName: "PaymentMehtods" })
+  @Column({ type: "enum", enum: PaymentMethods, enumName: "PaymentMethods" })
   paymentMethod!: PaymentMethods;
 
   @Column("float")
@@ -30,6 +30,6 @@ export class Payment extends BaseEntity {
   @CreateDateColumn()
   timestamp!: Date;
 
-  @ManyToOne(() => Teacher, (Teacher) => Teacher.payments)
-  teacher!: Relation<Teacher>
+  @ManyToOne(() => Teacher, (Teacher) => Teacher.payments, { eager: true })
+  teacher!: Relation<Teacher>;
 }

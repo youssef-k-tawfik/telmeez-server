@@ -17,5 +17,5 @@ export class Field extends BaseEntity {
   name!: string;
 
   @OneToMany(() => Course, (Course) => Course.field)
-  courses!: Relation<Course[]>;
+  courses?: Relation<Course[]>;
 }
